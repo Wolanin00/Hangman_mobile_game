@@ -1,0 +1,152 @@
+WindowManager:
+    MenuWindow:
+    GameWindow:
+    OptionsWindow:
+
+<MenuWindow>:
+    FloatLayout:
+        id : menu
+        size: root.width, root.height
+        canvas.before:
+            Color:
+                rgb: (0.89, 0.882, 0.5)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Image:
+            source: "./hangman_menu.png"
+            pos_hint : {"x" : 0, "y" : 0.3}
+            allow_stretch: False
+        Label:
+            id : made_by
+            text : "HANGMAN"
+            color: 0,0,0
+            markup : True
+            multiline : True
+            halign: 'center'
+            valign: 'middle'
+            font_size : 70
+            size_hint : 0.2, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            anchor_x: 'center'
+        Button:
+            text : "START GAME"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "y" : 0.45}
+            on_release:
+                root.start_game()
+                root.manager.transition.direction = "left"
+        Button:
+            text : "OPTIONS"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "y" : 0.3}
+            on_release:
+                root.go_to_options()
+                root.manager.transition.direction = "right"
+        Label:
+            id : made_by
+            text : "Copyright© reserved by Szewczyk Mateusz"
+            color: 0,0,0
+            markup : True
+            multiline : True
+            halign: 'center'
+            valign: 'middle'
+            font_size : 40
+            size_hint : 0.2, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+            anchor_x: 'center'
+
+<GameWindow>:
+    FloatLayout:
+        id : game
+        size: root.width, root.height
+        canvas.before:
+            Color:
+                rgb: (0.89, 0.882, 0.5)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Button:
+            text : "<- Menu"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.05, "y" : 0.92}
+            on_release:
+                root.back_menu()
+                root.manager.transition.direction = "right"
+        Label:
+            id : error_message_game_window
+            text : root.error_message
+            color: 0,0,0
+            markup : True
+            font_size : 32
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "y" : 0.2}
+            opacity : 0
+        Label:
+            id : current_word
+            text : root.current_word
+            color: 0,0,0
+            markup : True
+            multiline : True
+            halign: 'center'
+            valign: 'middle'
+            font_size : 80
+            size_hint : 0.2, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            anchor_x: 'center'
+        Label:
+            id : text_enter_sign
+            text : "Enter a sign:"
+            color : 0,0,0
+            markup : True
+            font_size : 52
+            size_hint : 0.3, 0.1
+            pos_hint : {"x":0.1, "y":0.1}
+        TextInput:
+            id : input_text_game_page
+            text : root.txt
+            multiline : False
+            size_hint : 0.4, 0.1
+            pos_hint : {"x" : 0.5, "y" : 0.1}
+            font_size: 120
+            on_text_validate : root.enter_letter()
+
+<OptionsWindow>:
+    FloatLayout:
+        id : options
+        size: root.width, root.height
+        canvas.before:
+            Color:
+                rgb: (0.89, 0.882, 0.5)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Button:
+            text : "Menu ->"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.75, "y" : 0.92}
+            on_release:
+                root.back_menu()
+                root.manager.transition.direction = "left"
+        Label:
+            id : text_1
+            text : "Select brightness mode"
+            color : 0,0,0
+            markup : True
+            font_size : 52
+            size_hint : 0.3, 0.1
+            pos_hint : {"x":0.35, "y":0.8}
+        Button:
+            text : "LIGHT"
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.15, "y" : 0.75}
+            on_release:
+                root.change_to_light_mode()
+                root.manager.transition.direction = "right"
+        Button:
+            text : "DARK"
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.55, "y" : 0.75}
+            on_release:
+                root.change_to_dark_mode()
+                root.manager.transition.direction = "right"
