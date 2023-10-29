@@ -1,28 +1,36 @@
 from kivy.core.window import Window
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty, StringProperty
-from kivy.uix.textinput import TextInput
-from kivy.lang import Builder
-from kivy.uix.floatlayout import FloatLayout
 from kivy.clock import Clock
-from kivy.graphics import Color, Rectangle, Line
+from kivy.lang import Builder
+from kivy.graphics import Color, Line
+from kivy.properties import StringProperty
 from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.popup import Popup
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 import re
 import random
 
 
 class MenuWindow(Screen):
+    """
+    Menu Window Screen class
 
+    :return: None
+    """
     def __init__(self, **kwargs):
         super(MenuWindow, self).__init__(**kwargs)
 
     def start_game(self):
+        """
+        Start game.
+        Every click on `start_game` clear data and start game from the beginning.
+
+        :return: None
+        """
         word_to_find = generate_random_sentence().replace(' ', '\n')
         sm.get_screen("game").current_word = re.sub(r'[a-zA-Z]', ' _', word_to_find).replace('\n', ' \n')
         sm.get_screen("game").word_to_find = word_to_find
@@ -32,10 +40,22 @@ class MenuWindow(Screen):
         sm.current = 'game'
 
     def go_to_options(self):
+        """
+        Function to go option screen.
+
+        :return: None
+        """
         sm.current = 'options'
 
 
 class GameWindow(Screen):
+    """
+    Main Game Screen.
+    Every occurs on page generate random sentence to find.
+
+    :return: None
+    """
+
     entered_words = []
     word_to_find = ""
     current_word = StringProperty()
@@ -50,7 +70,14 @@ class GameWindow(Screen):
         self.error_message = ""
 
     @staticmethod
-    def find_indices_with_loop(word, search_letter):
+    def find_indices_with_loop(word, search_letter) -> list:
+        """
+        Static function which find indices with loop.
+
+        :param word:
+        :param search_letter:
+        :return: indices
+        """
         indices = []
         for i, letter in enumerate(word):
             if letter == search_letter:
@@ -58,9 +85,20 @@ class GameWindow(Screen):
         return indices
 
     def back_menu(self):
+        """
+        Function to go to menu screen.
+
+        :return: None
+        """
         sm.current = 'menu'
 
     def enter_letter(self):
+        """
+        Function check error handling when letter entered.
+        Function calculate wrong added char and updating hangman draw.
+
+        :return: None
+        """
         pattern = r'[!@#$%^&*()_+{}\[\]:;<>,.?~\\/\|`\'"]'
         if len(self.ids.input_text_game_page.text) == 0:
             self.show_error(message='Can not provide empty field!')
@@ -91,7 +129,7 @@ class GameWindow(Screen):
                             temp[1+index*2] = self.word_to_find[index]
                         self.ids.current_word.text = ''.join(temp)
                         if '_' not in self.ids.current_word.text:
-                            self.show_wow_popup()
+                            self.show_won_popup()
                     else:
                         self.wrong_words += 1
                         if self.wrong_words == 1:
@@ -193,11 +231,23 @@ class GameWindow(Screen):
                 self.ids.input_text_game_page.text = ""
 
     def go_menu(self, instance):
+        """
+        Function go to menu screen.
+
+        :param instance: game instance
+        :return: None
+        """
         sm.transition.direction = 'right'
         sm.current = 'menu'
         self.lose_popup.dismiss()
 
     def play_again(self, instance):
+        """
+        Function play again.
+
+        :param instance: game instance
+        :return: None
+        """
         word_to_find = generate_random_sentence().replace(' ', '\n')
         self.current_word = re.sub(r'[a-zA-Z]', ' _', word_to_find).replace('\n', ' \n')
         self.word_to_find = word_to_find
@@ -207,6 +257,11 @@ class GameWindow(Screen):
         self.lose_popup.dismiss()
 
     def show_lose_popup(self):
+        """
+        Function which show lose popup witch `go menu` ang `play again` buttons.
+
+        :return: None
+        """
 
         content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text='You lose the game', font_size='30'))
@@ -222,7 +277,12 @@ class GameWindow(Screen):
         self.lose_popup = Popup(title='You Lose', content=content, size_hint=(None, None), size=(800, 600))
         self.lose_popup.open()
 
-    def show_wow_popup(self):
+    def show_won_popup(self):
+        """
+        Function which show won popup witch `go menu` ang `play again` buttons.
+
+        :return: None
+        """
 
         content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text='You won the game', font_size='30'))
@@ -239,28 +299,61 @@ class GameWindow(Screen):
         self.lose_popup.open()
 
     def remove_canvas(self):
+        """
+        Funtion which remove hangman canvas to start again with clear board.
+
+        :return: None
+        """
         for instruction in self.canvas.children:
             if isinstance(instruction, Line):
                 self.canvas.remove(instruction)
 
     def show_error(self, message=""):
+        """
+        Function showing error for error handling with customize error message
+
+        :param message: error message to display
+        :return: None
+        """
         self.ids.error_message_game_window.text = message
         self.ids.error_message_game_window.opacity = 1
         Clock.schedule_once(self.hide_error, 2)
 
     def hide_error(self, dt):
+        """
+        Function which hide error after 2 second presented.
+
+        :param dt:
+        :return: None
+        """
         self.ids.error_message_game_window.opacity = 0
 
 
 class OptionsWindow(Screen):
+    """
+    Game Option Screen.
+    Possible to change theme between dark and light mode
+
+    :return: None
+    """
 
     def back_menu(self):
+        """
+        Funtion go back to Menu.
+
+        :return: None
+        """
         sm.current = 'menu'
 
     def __init__(self, **kwargs):
         super(OptionsWindow, self).__init__(**kwargs)
 
     def change_to_dark_mode(self):
+        """
+        Funtion changing theme into dark mode.
+
+        :return: None
+        """
         for screen_name in sm.screen_names:
             # change all label with unique id
             for key, value in dict(sm.get_screen(screen_name).ids).items():
@@ -277,6 +370,11 @@ class OptionsWindow(Screen):
                 sm.get_screen(screen_name).hangman_draw_color = (1, 1, 1)
 
     def change_to_light_mode(self):
+        """
+        Funtion changing theme into light mode.
+
+        :return: None
+        """
         # change all label with unique id
         for screen_name in sm.screen_names:
             for key, value in dict(sm.get_screen(screen_name).ids).items():
@@ -309,6 +407,12 @@ objects = ["apples", "bananas", "cats", "dogs", "music", "movies"]
 
 
 def generate_random_sentence():
+    """
+    Function for generating random sentence.
+    It is possible to generate 6*6*5*6 unique sentence.
+
+    :return: None
+    """
     subject = random.choice(subjects)
     adverb = random.choice(adverbs)
     verb = random.choice(verbs)
