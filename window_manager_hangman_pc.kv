@@ -25,21 +25,21 @@ WindowManager:
             multiline : True
             halign: 'center'
             valign: 'middle'
-            font_size : 70
+            font_size : 45
             size_hint : 0.2, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.6}
             anchor_x: 'center'
         Button:
             text : "START GAME"
             size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "y" : 0.45}
+            pos_hint : {"x" : 0.35, "y" : 0.4}
             on_release:
                 root.start_game()
                 root.manager.transition.direction = "left"
         Button:
             text : "OPTIONS"
             size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "y" : 0.3}
+            pos_hint : {"x" : 0.35, "y" : 0.25}
             on_release:
                 root.go_to_options()
                 root.manager.transition.direction = "right"
@@ -51,7 +51,7 @@ WindowManager:
             multiline : True
             halign: 'center'
             valign: 'middle'
-            font_size : 40
+            font_size : 15
             size_hint : 0.2, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             anchor_x: 'center'
@@ -78,7 +78,7 @@ WindowManager:
             text : root.error_message
             color: 0,0,0
             markup : True
-            font_size : 32
+            font_size : 16
             size_hint : 0.2, 0.1
             pos_hint : {"x" : 0.4, "y" : 0.2}
             opacity : 0
@@ -90,7 +90,7 @@ WindowManager:
             multiline : True
             halign: 'center'
             valign: 'middle'
-            font_size : 80
+            font_size : 38
             size_hint : 0.2, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
             anchor_x: 'center'
@@ -99,7 +99,7 @@ WindowManager:
             text : "Enter a sign:"
             color : 0,0,0
             markup : True
-            font_size : 52
+            font_size : 26
             size_hint : 0.3, 0.1
             pos_hint : {"x":0.1, "y":0.1}
         TextInput:
@@ -108,7 +108,7 @@ WindowManager:
             multiline : False
             size_hint : 0.4, 0.1
             pos_hint : {"x" : 0.5, "y" : 0.1}
-            font_size: 120
+            font_size: 50
             on_text_validate : root.enter_letter()
 
 <OptionsWindow>:
@@ -133,7 +133,7 @@ WindowManager:
             text : "Select brightness mode"
             color : 0,0,0
             markup : True
-            font_size : 52
+            font_size : 26
             size_hint : 0.3, 0.1
             pos_hint : {"x":0.35, "y":0.8}
         Button:

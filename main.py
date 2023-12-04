@@ -14,6 +14,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import re
 import random
 
+pc = False  # Select if PC preview
+
 
 class MenuWindow(Screen):
     """
@@ -21,6 +23,7 @@ class MenuWindow(Screen):
 
     :return: None
     """
+
     def __init__(self, **kwargs):
         super(MenuWindow, self).__init__(**kwargs)
 
@@ -123,10 +126,11 @@ class GameWindow(Screen):
                 if self.ids.input_text_game_page.text.lower() not in self.entered_words:
                     self.entered_words.append(self.ids.input_text_game_page.text.lower())
                     if self.ids.input_text_game_page.text.lower() in self.word_to_find.lower():
-                        all_index = self.find_indices_with_loop(self.word_to_find.lower(), self.ids.input_text_game_page.text.lower())
+                        all_index = self.find_indices_with_loop(self.word_to_find.lower(),
+                                                                self.ids.input_text_game_page.text.lower())
                         temp = list(self.ids.current_word.text)
                         for index in all_index:
-                            temp[1+index*2] = self.word_to_find[index]
+                            temp[1 + index * 2] = self.word_to_find[index]
                         self.ids.current_word.text = ''.join(temp)
                         if '_' not in self.ids.current_word.text:
                             self.show_won_popup()
@@ -256,6 +260,9 @@ class GameWindow(Screen):
         self.remove_canvas()
         self.lose_popup.dismiss()
 
+    def get_one_line_sentence(self):
+        return self.word_to_find.replace('\n', ' ')
+
     def show_lose_popup(self):
         """
         Function which show lose popup witch `go menu` ang `play again` buttons.
@@ -264,7 +271,12 @@ class GameWindow(Screen):
         """
 
         content = BoxLayout(orientation='vertical')
-        content.add_widget(Label(text='You lose the game', font_size='30'))
+        if pc:
+            content.add_widget(Label(text='You lose the game', font_size='20'))
+            content.add_widget(Label(text=f'Sentence: {self.get_one_line_sentence()}', font_size='12'))
+        else:
+            content.add_widget(Label(text='You lose the game', font_size='30'))
+            content.add_widget(Label(text=f'Sentence: {self.get_one_line_sentence()}', font_size='20'))
         buttons = BoxLayout(orientation='horizontal')
         go_menu_button = Button(text='Go menu')
         go_menu_button.bind(on_release=self.go_menu)
@@ -274,7 +286,11 @@ class GameWindow(Screen):
         buttons.add_widget(play_again_button)
         content.add_widget(buttons)
 
-        self.lose_popup = Popup(title='You Lose', content=content, size_hint=(None, None), size=(800, 600))
+        if pc:
+            self.lose_popup = Popup(title='You Lose', content=content, size_hint=(None, None), size=(300, 200))
+        else:
+            self.lose_popup = Popup(title='You Lose', content=content, size_hint=(None, None), size=(800, 600))
+
         self.lose_popup.open()
 
     def show_won_popup(self):
@@ -285,7 +301,13 @@ class GameWindow(Screen):
         """
 
         content = BoxLayout(orientation='vertical')
-        content.add_widget(Label(text='You won the game', font_size='30'))
+
+        if pc:
+            content.add_widget(Label(text='You won the game', font_size='20'))
+            content.add_widget(Label(text=f'Sentence: {self.get_one_line_sentence()}', font_size='12'))
+        else:
+            content.add_widget(Label(text='You won the game', font_size='30'))
+            content.add_widget(Label(text=f'Sentence: {self.get_one_line_sentence()}', font_size='20'))
         buttons = BoxLayout(orientation='horizontal')
         go_menu_button = Button(text='Go menu')
         go_menu_button.bind(on_release=self.go_menu)
@@ -295,7 +317,11 @@ class GameWindow(Screen):
         buttons.add_widget(play_again_button)
         content.add_widget(buttons)
 
-        self.lose_popup = Popup(title='You Won', content=content, size_hint=(None, None), size=(800, 600))
+        if pc:
+            self.lose_popup = Popup(title='You Won', content=content, size_hint=(None, None), size=(300, 200))
+        else:
+            self.lose_popup = Popup(title='You Won', content=content, size_hint=(None, None), size=(800, 600))
+
         self.lose_popup.open()
 
     def remove_canvas(self):
@@ -397,7 +423,10 @@ class WindowManager(ScreenManager):
 
 
 # kv file
-kv = Builder.load_file('window_manager_hangman.kv')
+if pc:
+    kv = Builder.load_file('window_manager_hangman_pc.kv')
+else:
+    kv = Builder.load_file('window_manager_hangman.kv')
 
 # sentences
 subjects = ["I", "You", "He", "She", "They", "We"]
@@ -422,7 +451,6 @@ def generate_random_sentence():
 
 sm = WindowManager()
 
-
 # adding screens
 sm.add_widget(MenuWindow(name='menu'))
 sm.add_widget(GameWindow(name='game'))
@@ -436,6 +464,10 @@ class Main(App):
 
 if __name__ == "__main__":
 
-    # Window.size = (1080, 2400)  # TODO REMOVE if finished
+    # if pc:
+    #     Window.size = (360, 800)  # TODO REMOVE if finished
+    # else:
+    #     Window.size = (1080, 2400)  # TODO REMOVE if finished
+
     Window.fullscreen = 'auto'
     Main().run()
