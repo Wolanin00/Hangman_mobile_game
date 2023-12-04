@@ -14,7 +14,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import re
 import random
 
-pc = False  # Select if PC preview
+pc = True  # Select if PC preview
 
 
 class MenuWindow(Screen):
@@ -464,10 +464,10 @@ class Main(App):
 
 if __name__ == "__main__":
 
-    # if pc:
-    #     Window.size = (360, 800)  # TODO REMOVE if finished
-    # else:
-    #     Window.size = (1080, 2400)  # TODO REMOVE if finished
+    if pc:
+        Window.size = (360, 800)  # FOR PR resolution
+    else:
+        Window.size = (1080, 2400)  # FOR Mobile resolution
 
-    Window.fullscreen = 'auto'
+    # Window.fullscreen = 'auto'  # For creating apk
     Main().run()
