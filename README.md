@@ -6,8 +6,8 @@ HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
 
 # Features:
 - Sentence to find is randomly generated after each "Start game" click.
-    ```
-  # sentences
+```python
+    # sentences
     subjects = ["I", "You", "He", "She", "They", "We"]
     adverbs = ["now", "today", "always", "never", "occasionally", "probably"]
     verbs = ["love", "hate", "like", "enjoy", "dislike"]
@@ -15,12 +15,6 @@ HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
     
     
     def generate_random_sentence():
-        """
-        Function for generating random sentence.
-        It is possible to generate 6*6*5*6 unique sentence.
-    
-        :return: None
-        """
         subject = random.choice(subjects)
         adverb = random.choice(adverbs)
         verb = random.choice(verbs)
@@ -39,8 +33,3 @@ HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
 - After lose user see "Win Popup"
 
 ### Copyright© reserved by Szewczyk Mateusz
-
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
