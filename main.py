@@ -363,6 +363,9 @@ class OptionsWindow(Screen):
     :return: None
     """
 
+    def __init__(self, **kwargs):
+        super(OptionsWindow, self).__init__(**kwargs)
+
     def back_menu(self):
         """
         Funtion go back to Menu.
@@ -370,9 +373,6 @@ class OptionsWindow(Screen):
         :return: None
         """
         sm.current = 'menu'
-
-    def __init__(self, **kwargs):
-        super(OptionsWindow, self).__init__(**kwargs)
 
     def change_to_dark_mode(self):
         """
