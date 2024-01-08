@@ -1,5 +1,5 @@
 # Mobile app
-HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
+<b>HANGMAN -></b> The application was created to pass the course "Programowanie urządzeń mobilnych - Projekt"
 
 # UI preview:
 <img src="./static/game_screen.jpg" alt="Screenshot" style="border: 1px solid #000; height: 400px;"/>
