@@ -110,6 +110,18 @@ WindowManager:
             pos_hint : {"x" : 0.5, "y" : 0.1}
             font_size: 120
             on_text_validate : root.enter_letter()
+        Label:
+            id : made_by
+            text : "Copyright© reserved by Szewczyk Mateusz"
+            color: 0,0,0
+            markup : True
+            multiline : True
+            halign: 'center'
+            valign: 'middle'
+            font_size : 40
+            size_hint : 0.2, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+            anchor_x: 'center'
 
 <OptionsWindow>:
     FloatLayout:
@@ -150,3 +162,15 @@ WindowManager:
             on_release:
                 root.change_to_dark_mode()
                 root.manager.transition.direction = "right"
+        Label:
+            id : made_by
+            text : "Copyright© reserved by Szewczyk Mateusz"
+            color: 0,0,0
+            markup : True
+            multiline : True
+            halign: 'center'
+            valign: 'middle'
+            font_size : 40
+            size_hint : 0.2, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+            anchor_x: 'center'
