@@ -2,7 +2,7 @@
 HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
 
 # UI preview:
-<img src="./static/game_screen.jpg" alt="Screenshot" style="border: 1px solid #000;"/>
+<img src="./static/game_screen.jpg" alt="Screenshot" style="border: 1px solid #000; height: 400px;"/>
 
 # Features:
 - Sentence to find is randomly generated after each "Start game" click.
@@ -31,7 +31,7 @@ HANGMAN -> Mobile app for "Programowanie urządzeń mobilnych - Projekt"
 
   | Dark mode | Light mode |
   | ----------| ---------- |
-  | <img src="./static/dark_mode.jpg" alt="Screenshot" style="border: 1px solid #000;"/> | <img src="./static/light_mode.jpg" alt="Screenshot" style="border: 1px solid #000;"/> |
+  | <img src="./static/dark_mode.jpg" alt="Screenshot" style="border: 1px solid #000; height: 400px;"/> | <img src="./static/light_mode.jpg" alt="Screenshot" style="border: 1px solid #000; height: 400px;"/> |
 
 - Error handling for double press the same letter, enter empty string, enter denied chars, enter more than 1 char
 - Hangman image is automatically updating
