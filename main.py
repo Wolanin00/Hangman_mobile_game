@@ -455,6 +455,7 @@ sm = WindowManager()
 sm.add_widget(MenuWindow(name='menu'))
 sm.add_widget(GameWindow(name='game'))
 sm.add_widget(OptionsWindow(name='options'))
+sm.get_screen("options").change_to_dark_mode()
 
 
 class Main(App):
